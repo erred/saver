@@ -43,7 +43,7 @@ func (s *Server) dbSetup(ctx context.Context) error {
 	err = ExecuteTx(ctx, s.pool, pgx.TxOptions{}, func(tx pgx.Tx) error {
 		_, err := tx.Exec(ctx, `
 CREATE TABLE IF NOT EXISTS http (
-	timestamp	TIMESTAMPZ,
+	timestamp	TIMESTAMP,
 	remote		TEXT,
 	user_agent	TEXT,
 	referrer	TEXT
@@ -56,7 +56,7 @@ CREATE TABLE IF NOT EXISTS http (
 		}
 		_, err = tx.Exec(ctx, `
 CREATE TABLE IF NOT EXISTS beacon (
-	timestamp	TIMESTAMPZ,
+	timestamp	TIMESTAMP,
 	remote		TEXT,
 	user_agent	TEXT,
 	referrer	TEXT
@@ -69,7 +69,7 @@ CREATE TABLE IF NOT EXISTS beacon (
 		}
 		_, err = tx.Exec(ctx, `
 CREATE TABLE IF NOT EXISTS csp (
-	timestamp		TIMESTAMPZ,
+	timestamp		TIMESTAMP,
 	remote			TEXT,
 	user_agent		TEXT,
 	referrer		TEXT
@@ -87,7 +87,7 @@ CREATE TABLE IF NOT EXISTS csp (
 		}
 		_, err = tx.Exec(ctx, `
 CREATE TABLE IF NOT EXISTS repodefault (
-	timestamp	TIMESTAMPZ,
+	timestamp	TIMESTAMP,
 	owner		TEXT,
 	repo		TEXT
 )`)
