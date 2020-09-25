@@ -39,10 +39,10 @@ func (s *Server) Register(c *usvc.Components) error {
 	s.tracer = c.Tracer
 
 	saver.RegisterSaverService(c.GRPC, &saver.SaverService{
-		HTTP:        nil,
-		Beacon:      nil,
-		CSP:         nil,
-		RepoDefault: nil,
+		HTTP:        s.http,
+		Beacon:      s.beacon,
+		CSP:         s.csp,
+		RepoDefault: s.repoDefault,
 	})
 
 	return s.dbSetup(context.Background())
