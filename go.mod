@@ -8,5 +8,5 @@ require (
 	github.com/rs/zerolog v1.20.0
 	go.opentelemetry.io/otel v0.11.0
 	go.seankhliao.com/apis v0.0.0-20200925201609-7c5465abda54
-	go.seankhliao.com/usvc v0.7.6
+	go.seankhliao.com/usvc v0.7.7
 )
