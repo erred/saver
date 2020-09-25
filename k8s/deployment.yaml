@@ -35,7 +35,7 @@ spec:
             - -tls.crt=/var/secret/tls/tls.crt
             - -tls.key=/var/secret/tls/tls.key
           ports:
-            - name: https
+            - name: grpc
               containerPort: 8080
             - name: metrics
               containerPort: 8000
