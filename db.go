@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS http (
 	timestamp	TIMESTAMP,
 	remote		TEXT,
 	user_agent	TEXT,
-	referrer	TEXT
+	referrer	TEXT,
 	method		TEXT,
 	domain		TEXT,
 	path		TEXT,
@@ -80,7 +80,7 @@ CREATE TABLE IF NOT EXISTS csp (
 	violated_directive	TEXT,
 	effective_directive	TEXT,
 	line_number		INTEGER,
-	status_code		INTEGER
+	status_code		INTEGER,
 )`)
 		if err != nil {
 			return err
@@ -89,7 +89,7 @@ CREATE TABLE IF NOT EXISTS csp (
 CREATE TABLE IF NOT EXISTS repodefault (
 	timestamp	TIMESTAMP,
 	owner		TEXT,
-	repo		TEXT
+	repo		TEXT,
 )`)
 		if err != nil {
 			return err
