@@ -9,10 +9,25 @@ spec:
   duration: 87600h # 10 years
   renewBefore: 360h
   dnsNames:
-    - "statsologger"
-    - "statsologger.default"
-    - "statsologger.default.svc"
-    - "statsologger.default.svc.cluster.local"
+    - "saver"
+    - "saver.default"
+    - "saver.default.svc"
+    - "saver.default.svc.cluster.local"
+  issuerRef:
+    name: internal-ca
+    kind: ClusterIssuer
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: cockroachdb-client-saver
+spec:
+  secretName: cockroachdb-client-saver
+  duration: 2160h
+  renewBefore: 360h
+  commonName: saver
+  usages:
+    - client auth
   issuerRef:
     name: internal-ca
     kind: ClusterIssuer
