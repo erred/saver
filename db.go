@@ -59,7 +59,7 @@ CREATE TABLE IF NOT EXISTS beacon (
 	timestamp	TIMESTAMP,
 	remote		TEXT,
 	user_agent	TEXT,
-	referrer	TEXT
+	referrer	TEXT,
 	duration_ms	INTEGER,
 	src_page	TEXT,
 	dst_page	TEXT
@@ -72,7 +72,7 @@ CREATE TABLE IF NOT EXISTS csp (
 	timestamp		TIMESTAMP,
 	remote			TEXT,
 	user_agent		TEXT,
-	referrer		TEXT
+	referrer		TEXT,
 	disposition		TEXT,
 	blocked_uri		TEXT,
 	source_file		TEXT,
