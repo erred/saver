@@ -99,6 +99,5 @@ CREATE TABLE IF NOT EXISTS repodefault (
 	if err != nil {
 		return fmt.Errorf("dbSetup ensure tables: %w", err)
 	}
-
 	return nil
 }

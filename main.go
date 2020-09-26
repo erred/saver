@@ -17,9 +17,7 @@ const (
 )
 
 func main() {
-	var s Server
-
-	usvc.Run(context.Background(), name, &s, true)
+	usvc.Run(context.Background(), name, &Server{}, true)
 }
 
 type Server struct {

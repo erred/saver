@@ -52,15 +52,6 @@ spec:
               mountPath: /var/secret/tls
             - name: client
               mountPath: /var/secret/cockroachdb
-            # - name: client
-            #   mountPath: /var/secret/cockroachdb/ca.crt
-            #   subPath: ca.crt
-            # - name: client
-            #   mountPath: /var/secret/cockroachdb/client.saver.crt
-            #   subPath: tls.crt
-            # - name: client
-            #   mountPath: /var/secret/cockroachdb/client.saver.key
-            #   subPath: tls.key
       volumes:
         - name: certs
           secret:
