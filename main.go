@@ -3,10 +3,13 @@ package main
 import (
 	"context"
 	"flag"
+	"fmt"
+	"os"
 
 	"github.com/jackc/pgx/v4"
 	"github.com/jackc/pgx/v4/pgxpool"
 	"github.com/rs/zerolog"
+	"go.opentelemetry.io/otel/api/global"
 	"go.opentelemetry.io/otel/api/trace"
 	saver "go.seankhliao.com/apis/saver/v1"
 	"go.seankhliao.com/usvc"
@@ -17,7 +20,7 @@ const (
 )
 
 func main() {
-	usvc.Run(context.Background(), name, &Server{}, true)
+	os.Exit(usvc.Exec(context.Background(), &Server{}, os.Args))
 }
 
 type Server struct {
@@ -28,26 +31,29 @@ type Server struct {
 	tracer trace.Tracer
 }
 
-func (s *Server) Flag(fs *flag.FlagSet) {
+func (s *Server) Flags(fs *flag.FlagSet) {
 	fs.StringVar(&s.dsn, "db", "", "connection string for pgx")
 }
 
-func (s *Server) Register(c *usvc.Components) error {
-	s.log = c.Log
-	s.tracer = c.Tracer
+func (s *Server) Setup(ctx context.Context, u *usvc.USVC) error {
+	s.log = u.Logger
+	s.tracer = global.Tracer(name)
 
-	saver.RegisterSaverService(c.GRPC, &saver.SaverService{
+	saver.RegisterSaverService(u.GRPCServer, &saver.SaverService{
 		HTTP:        s.http,
 		Beacon:      s.beacon,
 		CSP:         s.csp,
 		RepoDefault: s.repoDefault,
 	})
 
-	return s.dbSetup(context.Background())
-}
-
-func (s *Server) Shutdown(ctx context.Context) error {
-	s.pool.Close()
+	err := s.dbSetup(ctx)
+	if err != nil {
+		return fmt.Errorf("dbSetup: %w", err)
+	}
+	go func() {
+		<-ctx.Done()
+		s.pool.Close()
+	}()
 	return nil
 }
 
